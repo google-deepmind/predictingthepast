@@ -129,7 +129,7 @@ curl --output iphi_emb_xid153143996.pkl \
     https://storage.googleapis.com/ithaca-resources/models/iphi_emb_xid153143996.pkl
 ```
 
-### Inference Eexample
+### Inference Example
 An example of using the library can be run via:
 
 ```sh
