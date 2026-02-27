@@ -467,7 +467,7 @@ class Experiment(experiment.AbstractExperiment):
     ) = grad_loss_fn(params, batch, global_step, rng)
 
     scaled_grads = jax.tree.map(jnp.nan_to_num, scaled_grads)
-    grads = jl_utils.tree_psum(scaled_grads, axis_name='i')
+    grads = jax.lax.psum(scaled_grads, axis_name='i')
 
     # Compute and apply updates via our optimizer.
     learning_rate = self._learning_rate_fn(global_step)
