@@ -94,7 +94,7 @@ notebook, where researchers can query one of our trained models to get text
 restorations, visualise attention weights, and more.
 
 -   [Aeneas Interactive Interface](https://predictingthepast.com/)
--   [Google Colab for using Aeneas for your research](https://colab.research.google.com/github/deepmind/predictingthepast/blob/master/colabs/predictingthepast_inference.ipynb)
+-   [Google Colab for using Aeneas for your research](https://colab.sandbox.google.com/github/google-deepmind/predictingthepast/blob/main/colabs/inference.ipynb)
 
 ## Aeneas Inference Offline
 
