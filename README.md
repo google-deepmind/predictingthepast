@@ -37,6 +37,8 @@ When using any of the source code or outputs of this project, please cite:
 
 ---
 
+<a href="https://deepmind.google/science/workflows/conversing-with-antiquity/" target="_blank"><img src="https://img.shields.io/badge/Google%20Antigravity-Try%20the%20Skill-1a73e8?logo=google" alt="Try the skill on Google Antigravity"/></a>
+
 <a href="https://colab.research.google.com/github/google-deepmind/predictingthepast/blob/master/colabs/inference.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open this notebook in Google Colab"/></a>
 
 Human history is born in writing. Inscriptions, among the earliest written
