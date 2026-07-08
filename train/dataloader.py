@@ -570,7 +570,7 @@ def loader_tf(
   ):
     # Load Greek dataset
     logging.info('Loading Greek dataset')
-    dataset_tmp = {d['id']: d for d in json.load(greek_dataset_file)}
+    dataset_tmp = {d['id']: d for d in json.load(greek_dataset_file)}  # pyrefly: ignore[bad-argument-type]
 
     # Find duplicate inscriptions
     rev_dataset = {}
@@ -598,7 +598,7 @@ def loader_tf(
       mode != 'train' and 'latin' in config.eval_language
   ):
     dataset['latin'] = []
-    dataset_tmp = json.load(latin_dataset_file)
+    dataset_tmp = json.load(latin_dataset_file)  # pyrefly: ignore[bad-argument-type]
     for d in dataset_tmp:
       if d['id'] not in block_list:
         dataset['latin'].append(d)
@@ -617,7 +617,7 @@ def loader_tf(
       """Loads an image from the given path and returns its bytes."""
       with open_fn(path, 'rb') as f:
         image_bytes = f.read()
-        img = Image.open(io.BytesIO(image_bytes)).copy()
+        img = Image.open(io.BytesIO(image_bytes)).copy()  # pyrefly: ignore[bad-argument-type]
         img = img.convert('L')
 
         # Convert PIL image to OpenCV (numpy array)
@@ -680,15 +680,15 @@ def loader_tf(
             r'\[(.*?)\]', lambda m: '-' * len(m.group(1)), sample['text']
         )
         sample['text'] = (
-            sample['text'].replace(alphabet.sog, '').replace(alphabet.eog, '')
+            sample['text'].replace(alphabet.sog, '').replace(alphabet.eog, '')  # pyrefly: ignore[missing-attribute]
         )
 
       # Filter by text length
       if (
           len(
               sample['text']
-              .replace(alphabet.missing, '')
-              .replace(alphabet.missing_unk, '')
+              .replace(alphabet.missing, '')  # pyrefly: ignore[missing-attribute]
+              .replace(alphabet.missing_unk, '')  # pyrefly: ignore[missing-attribute]
               .strip()
           )
           < config.context_char_min
@@ -779,10 +779,10 @@ def loader_tf(
   }
   padding_values = {
       'id': 0,
-      'text_char': alphabet.pad_idx,
+      'text_char': alphabet.pad_idx,  # pyrefly: ignore[missing-attribute]
       'text_mask': False,
       'text_missing_mask': True,
-      'text_unmasked': alphabet.pad_idx,
+      'text_unmasked': alphabet.pad_idx,  # pyrefly: ignore[missing-attribute]
       'next_sentence_mask': False,
       'next_sentence_label': 0,
       'missing_unk_mask': False,

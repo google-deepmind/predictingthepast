@@ -216,7 +216,7 @@ def dot_product_attention(
     # corresponds to in positional dimensions here, assuming query dim.
     dropout_shape = list(attn_weights.shape)
     dropout_shape[-2] = 1
-    keep = random.bernoulli(dropout_rng, keep_prob, dropout_shape)
+    keep = random.bernoulli(dropout_rng, keep_prob, dropout_shape)  # pyrefly: ignore[bad-argument-type]
     keep = jnp.broadcast_to(keep, attn_weights.shape)
     multiplier = keep.astype(attn_weights.dtype) / jnp.asarray(
         keep_prob, dtype=dtype
@@ -995,16 +995,16 @@ def combine_masks(*masks: Optional[Array], dtype: DType = jnp.float32):
   Returns:
     Combined mask, reduced by logical and, returns None if no masks given.
   """
-  masks = [m for m in masks if m is not None]
+  masks = [m for m in masks if m is not None]  # pyrefly: ignore[bad-assignment]
   if not masks:
     return None
   assert all(
-      map(lambda x: x.ndim == masks[0].ndim, masks)
+      map(lambda x: x.ndim == masks[0].ndim, masks)  # pyrefly: ignore[missing-attribute]
   ), f'masks must have same rank: {tuple(map(lambda x: x.ndim, masks))}'
   mask, *other_masks = masks
   for other_mask in other_masks:
-    mask = jnp.logical_and(mask, other_mask)
-  return mask.astype(dtype)
+    mask = jnp.logical_and(mask, other_mask)  # pyrefly: ignore[bad-argument-type]
+  return mask.astype(dtype)  # pyrefly: ignore[missing-attribute]
 
 
 def combine_biases(*masks: Optional[Array]):
@@ -1016,15 +1016,15 @@ def combine_biases(*masks: Optional[Array]):
   Returns:
     Combined mask, reduced by summation, returns None if no masks given.
   """
-  masks = [m for m in masks if m is not None]
+  masks = [m for m in masks if m is not None]  # pyrefly: ignore[bad-assignment]
   if not masks:
     return None
   assert all(
-      map(lambda x: x.ndim == masks[0].ndim, masks)
+      map(lambda x: x.ndim == masks[0].ndim, masks)  # pyrefly: ignore[missing-attribute]
   ), f'masks must have same rank: {tuple(map(lambda x: x.ndim, masks))}'
   mask, *other_masks = masks
   for other_mask in other_masks:
-    mask = mask + other_mask
+    mask = mask + other_mask  # pyrefly: ignore[unsupported-operation]
   return mask
 
 

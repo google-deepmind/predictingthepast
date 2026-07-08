@@ -211,7 +211,7 @@ class AddPositionEmbs(nn.Module):
         cache.store(cache_entry.replace(i=cache_entry.i + 1))
         _, _, df = pos_embedding.shape
         pe = lax.dynamic_slice(
-            pos_embedding, jnp.array((0, i, 0)), jnp.array((1, 1, df))
+            pos_embedding, jnp.array((0, i, 0)), jnp.array((1, 1, df))  # pyrefly: ignore[bad-argument-type]
         )
     if inputs_positions is None:
       # normal unpacked case:

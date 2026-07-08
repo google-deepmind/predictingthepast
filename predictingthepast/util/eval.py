@@ -275,7 +275,7 @@ def beam_search_batch(
 
             # Skip expanding the beam if logprob too small
             if nucleus and np.isclose(
-                mask_logits_nucleus_i[text_char_pos, text_char_id], -1e12
+                mask_logits_nucleus_i[text_char_pos, text_char_id], -1e12  # pyrefly: ignore[unbound-name]
             ):
               continue
 
@@ -356,7 +356,7 @@ def beam_search_batch(
 
     # Update progress bar
     if display_progress:
-      pbar.update(1)
+      pbar.update(1)  # pyrefly: ignore[unbound-name]
 
   # Order final candidates by score
   return sorted(

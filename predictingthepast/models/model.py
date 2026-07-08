@@ -55,7 +55,7 @@ class T5DecoderLayer(nn.Module):
 
     # Decoder Mask
     decoder_mask = t5_layers.make_attention_mask(
-        padding_mask, padding_mask, pairwise_fn=jnp.logical_and, dtype=jnp.bool
+        padding_mask, padding_mask, pairwise_fn=jnp.logical_and, dtype=jnp.bool  # pyrefly: ignore[bad-argument-type]
     )
 
     # Self-attention block
@@ -164,7 +164,7 @@ class Model(nn.Module):
     elif text_char_onehot is not None and padding is None:
       padding = jnp.where(text_char_onehot.argmax(-1) > 0, 1, 0)
     padding_mask = padding  # [..., jnp.newaxis]
-    text_len = jnp.sum(padding, 1)
+    text_len = jnp.sum(padding, 1)  # pyrefly: ignore[bad-argument-type]
 
     # Character embeddings
     if text_char is not None:
@@ -201,13 +201,13 @@ class Model(nn.Module):
         x_img = common_layers.LayerNorm(name='x_img_norm')(x_img)
 
         # Zero out embeddings for non-available images
-        x_img = x_img * jnp.expand_dims(vision_available, -1)
+        x_img = x_img * jnp.expand_dims(vision_available, -1)  # pyrefly: ignore[bad-argument-type]
       else:
         x_img = jnp.zeros((x.shape[0], self.emb_dim))
 
     if self.model_type == 'bigbird':
       # Add an extra dimension to the padding mask
-      padding_mask = padding_mask[..., jnp.newaxis]
+      padding_mask = padding_mask[..., jnp.newaxis]  # pyrefly: ignore[unsupported-operation]
 
       # Positional embeddings
       if self.posemb_combine_type == 'add':
@@ -236,7 +236,7 @@ class Model(nn.Module):
       )
     elif self.model_type == 'bigbird_rope':
       # Add an extra dimension to the padding mask
-      padding_mask = padding_mask[..., jnp.newaxis]
+      padding_mask = padding_mask[..., jnp.newaxis]  # pyrefly: ignore[unsupported-operation]
 
       model_block = functools.partial(
           bigbird.BigBirdBlock,
@@ -340,12 +340,12 @@ class Model(nn.Module):
 
     # Average over temporal dimension
     if self.region_date_pooling == 'average':
-      x = jnp.multiply(padding_mask.astype(jnp.float32), x)
+      x = jnp.multiply(padding_mask.astype(jnp.float32), x)  # pyrefly: ignore[missing-attribute]
       x = jnp.sum(x, 1) / text_len.astype(jnp.float32)[..., None]
       x_date = x
       x_region = x
     elif self.region_date_pooling == 'sum':
-      x = jnp.multiply(padding_mask.astype(jnp.float32), x)
+      x = jnp.multiply(padding_mask.astype(jnp.float32), x)  # pyrefly: ignore[missing-attribute]
       x = jnp.sum(x, 1)
       x_date = x
       x_region = x
@@ -369,7 +369,7 @@ class Model(nn.Module):
 
     # Concatenate vision and text
     if self.vision:
-      x_region = jax.lax.concatenate([x_region, x_img], 1) / jnp.sqrt(2)
+      x_region = jax.lax.concatenate([x_region, x_img], 1) / jnp.sqrt(2)  # pyrefly: ignore[unbound-name]
 
     if self.use_output_mlp:
       logits_date = common_layers.MlpBlock(

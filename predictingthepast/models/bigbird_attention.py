@@ -678,7 +678,7 @@ class BigBirdAttention(nn.Module):
     extra_len = self.block_size - (orig_seqlen % self.block_size)
     pad_width = np.array([[0, 0], [0, extra_len], [0, 0]])
     mask_pad = np.array([[0, 0], [0, extra_len], [0, 0]])
-    padding_mask = jnp.pad(padding_mask, mask_pad, constant_values=-1e9)
+    padding_mask = jnp.pad(padding_mask, mask_pad, constant_values=-1e9)  # pyrefly: ignore[bad-argument-type]
 
     inputs_q = jnp.pad(inputs_q, pad_width)
     if inputs_kv is not None:
