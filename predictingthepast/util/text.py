@@ -76,7 +76,7 @@ def random_mask_span(t, geometric_p=0.2, limit_chars=None):
   assert span_start + span_len <= span_end
 
   # Create mask indices
-  mask_idx = np.arange(span_start, span_start + span_len, dtype=np.int32)
+  mask_idx = np.arange(span_start, span_start + span_len, dtype=np.int32)  # pyrefly: ignore[no-matching-overload]
 
   return mask_idx
 
