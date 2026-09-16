@@ -51,7 +51,7 @@ class BigBirdBlock(nn.Module):
   qkv_dim: int
   mlp_dim: int
   num_heads: int
-  dtype: jnp.dtype = jnp.float32
+  dtype: jnp.dtype = jnp.float32  # pyrefly: ignore[bad-assignment]
   causal_mask: bool = False
   dropout_rate: float = 0.1
   attention_dropout_rate: float = 0.1

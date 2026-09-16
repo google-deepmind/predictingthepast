@@ -33,7 +33,7 @@ class T5DecoderLayer(nn.Module):
   qkv_dim: int
   mlp_dim: int
   num_heads: int
-  dtype: jnp.dtype = jnp.float32
+  dtype: jnp.dtype = jnp.float32  # pyrefly: ignore[bad-assignment]
   causal_mask: bool = False  # Unused
   dropout_rate: float = 0.1
   attention_dropout_rate: float = 0.1
@@ -257,7 +257,7 @@ class Model(nn.Module):
           qkv_dim=self.qkv_dim,
           mlp_dim=self.mlp_dim,
           num_heads=self.num_heads,
-          dtype=dtype,
+          dtype=dtype,  # pyrefly: ignore[bad-argument-type]
           causal_mask=self.causal_mask,
           dropout_rate=self.dropout_rate,
           attention_dropout_rate=self.attention_dropout_rate,

@@ -146,7 +146,7 @@ def dot_product_attention(
     dropout_rng: Optional[PRNGKey] = None,
     dropout_rate: float = 0.0,
     deterministic: bool = False,
-    dtype: DType = jnp.float32,
+    dtype: DType = jnp.float32,  # pyrefly: ignore[bad-function-definition]
     float32_logits: bool = False,
 ):
   """Computes dot-product attention given query, key, and value.
@@ -243,7 +243,7 @@ class MultiHeadDotProductAttention(nn.Module):
 
   num_heads: int
   head_dim: int
-  dtype: DType = jnp.float32
+  dtype: DType = jnp.float32  # pyrefly: ignore[bad-assignment]
   dropout_rate: float = 0.0
   kernel_init: Initializer = nn.initializers.variance_scaling(
       1.0, 'fan_in', 'normal'
@@ -547,7 +547,7 @@ class DenseGeneral(nn.Module):
 
   features: Union[Iterable[int], int]
   axis: Union[Iterable[int], int] = -1
-  dtype: DType = jnp.float32
+  dtype: DType = jnp.float32  # pyrefly: ignore[bad-assignment]
   kernel_init: Initializer = nn.initializers.variance_scaling(
       1.0, 'fan_in', 'truncated_normal'
   )
@@ -676,7 +676,7 @@ class Embed(nn.Module):
   num_embeddings: int
   features: int
   cast_input_dtype: Optional[DType] = None
-  dtype: DType = jnp.float32
+  dtype: DType = jnp.float32  # pyrefly: ignore[bad-assignment]
   attend_dtype: Optional[DType] = None
   embedding_init: Initializer = default_embed_init
   one_hot: bool = False
@@ -920,7 +920,7 @@ def make_attention_mask(
     key_input: Array,
     pairwise_fn: Callable = jnp.multiply,
     extra_batch_dims: int = 0,
-    dtype: DType = jnp.float32,
+    dtype: DType = jnp.float32,  # pyrefly: ignore[bad-function-definition]
 ) -> Array:
   """Mask-making helper for attention weights.
 
@@ -954,7 +954,7 @@ def make_attention_mask(
 
 
 def make_causal_mask(
-    x: Array, extra_batch_dims: int = 0, dtype: DType = jnp.float32
+    x: Array, extra_batch_dims: int = 0, dtype: DType = jnp.float32  # pyrefly: ignore[bad-function-definition]
 ) -> Array:
   """Make a causal mask for self-attention.
 
@@ -985,7 +985,7 @@ def make_causal_mask(
   )
 
 
-def combine_masks(*masks: Optional[Array], dtype: DType = jnp.float32):
+def combine_masks(*masks: Optional[Array], dtype: DType = jnp.float32):  # pyrefly: ignore[bad-function-definition]
   """Combine attention masks.
 
   Args:
