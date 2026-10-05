@@ -96,7 +96,7 @@ def to_nucleus_logits(
   threshold_idx = np.argmax(
       np.cumsum(sorted_probs, -1) >= 1 - clipped_top_p, axis=-1
   )
-  threshold_largest_logits = np.take_along_axis(  # pytype: disable=wrong-arg-types
+  threshold_largest_logits = np.take_along_axis(
       sorted_logits, threshold_idx[..., None], axis=-1
   )
   assert threshold_largest_logits.shape == logits.shape[:-1] + (1,)
@@ -163,7 +163,7 @@ def beam_search_batch(
       pad_len = text_pred_len_max - len(entry.text_pred)
       text_pred_pad = entry.text_pred + alphabet.pad * pad_len
 
-      current_mask_idx = entry.mask_idx.copy()  # pytype: disable=attribute-error  # strict_namedtuple_checks
+      current_mask_idx = entry.mask_idx.copy()
       text_char = util_text.text_to_idx(text_pred_pad, alphabet).reshape(1, -1)
       text_chars.append(text_char)
       beam_batch.append(entry._replace(mask_idx=current_mask_idx))
@@ -243,7 +243,7 @@ def beam_search_batch(
             )
 
           # Case: add a replace missing unk with single missing character
-          mask_idx_i = current_beam_entry.mask_idx.copy()  # pytype: disable=attribute-error  # strict_namedtuple_checks
+          mask_idx_i = current_beam_entry.mask_idx.copy()
           text_pred_i = (
               current_beam_entry.text_pred[:text_char_pos]
               + alphabet.missing
@@ -304,7 +304,7 @@ def beam_search_batch(
             )
 
             # Check completed condition
-            mask_idx_i = current_beam_entry.mask_idx.copy()  # pytype: disable=attribute-error  # strict_namedtuple_checks
+            mask_idx_i = current_beam_entry.mask_idx.copy()
             finished = all(
                 text_pred_i[m_idx]
                 not in {alphabet.missing, alphabet.missing_unk}

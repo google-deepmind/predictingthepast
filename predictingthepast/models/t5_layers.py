@@ -1131,4 +1131,4 @@ def make_decoder_mask(
         )
     )
 
-  return combine_masks(*masks, dtype=dtype)  # pytype: disable=bad-return-type  # jax-ndarray
+  return combine_masks(*masks, dtype=dtype)

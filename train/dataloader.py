@@ -499,12 +499,12 @@ def generate_sample(
         config.vision.output_size[1],
         1,
     ))
-    if future_vision is not None:  # pytype: disable=name-error
-      out_vision = future_vision.result()  # pytype: disable=name-error
+    if future_vision is not None:  # pyrefly: ignore[unbound-name]
+      out_vision = future_vision.result()
       if out_vision[0] is not None:
         vision_img = out_vision[0]
         vision_available = out_vision[1]
-      vision_executor.shutdown()  # pytype: disable=name-error
+      vision_executor.shutdown()  # pyrefly: ignore[unbound-name]
 
   out = {
       'id': inscription_id,  # 'text_str': text,
@@ -527,8 +527,8 @@ def generate_sample(
   }
   if 'vision' in config and config.vision.enabled:
     out.update({
-        'vision_img': vision_img.astype(np.float16),  # pytype: disable=name-error
-        'vision_available': vision_available,  # pytype: disable=name-error
+        'vision_img': vision_img.astype(np.float16),  # pyrefly: ignore[unbound-name]
+        'vision_available': vision_available,  # pyrefly: ignore[unbound-name]
     })
   return out
 
