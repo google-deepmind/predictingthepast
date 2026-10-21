@@ -142,6 +142,13 @@ def beam_search_batch(
   beam_top = {}
 
   space_idx = alphabet.char2idx[alphabet.space]
+  valid_char_ids = [space_idx] + list(
+      range(
+          alphabet.alphabet_start_idx,
+          alphabet.alphabet_end_idx + 1,
+          # alphabet.char2idx[alphabet.punctuation[-1]] + 1,
+      )
+  )
 
   # Initialise tqdm bar
   if display_progress:
@@ -194,7 +201,10 @@ def beam_search_batch(
       mask_logprob_i = log_softmax(mask_logits_i)
       unk_logprob_i = log_softmax(unk_logits[batch_i, :text_len])
       if nucleus:
-        mask_logits_nucleus_i = to_nucleus_logits(mask_logprob_i, nucleus_top_p)
+        mask_logits_nucleus_i = np.full_like(mask_logprob_i, -1e12)
+        mask_logits_nucleus_i[:, valid_char_ids] = to_nucleus_logits(
+            mask_logprob_i[:, valid_char_ids], nucleus_top_p
+        )
 
       # Keep only predictions for mask
       mask_idx_loop = []
@@ -265,13 +275,7 @@ def beam_search_batch(
         elif current_beam_entry.text_pred[text_char_pos] == alphabet.missing:
 
           # Iterate over possible characters
-          for text_char_id in [space_idx] + list(
-              range(
-                  alphabet.alphabet_start_idx,
-                  alphabet.alphabet_end_idx + 1,
-                  # alphabet.char2idx[alphabet.punctuation[-1]] + 1,
-              )
-          ):
+          for text_char_id in valid_char_ids:
 
             # Skip expanding the beam if logprob too small
             if nucleus and np.isclose(
@@ -341,7 +345,7 @@ def beam_search_batch(
     for entry in beam_tmp:
       if (entry.text_pred not in beam_tmp_kv) or (
           entry.text_pred in beam_tmp_kv
-          and beam_tmp_kv[entry.text_pred].pred_logprob > entry.pred_logprob
+          and beam_tmp_kv[entry.text_pred].pred_logprob < entry.pred_logprob
       ):
         beam_tmp_kv[entry.text_pred] = entry
     beam_tmp = sorted(
