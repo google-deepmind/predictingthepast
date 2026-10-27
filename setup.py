@@ -27,7 +27,7 @@ setuptools.setup(
     name='predictingthepast',
     author='Aeneas team',
     author_email='deepmind-ithaca-team@google.com',
-    version='0.1.0',
+    version='0.1.1',
     license='Apache License, Version 2.0',
     description='Aeneas library for ancient text restoration and attribution.',
     long_description=long_description,
